@@ -11,6 +11,7 @@ public class DesktopLauncher {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setForegroundFPS(1000);
 		config.setTitle("SimplePlatformer");
+		config.setWindowedMode(800,600);
 		new Lwjgl3Application(new SimplePlat(), config);
 	}
 }
