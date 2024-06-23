@@ -77,4 +77,9 @@ public class TiledGameMap  extends GameMap
     {
         return tiledmap.getLayers().getCount();
     }
+
+    @Override
+    protected TileType getTileTypeByCoordinate(int layer, int col, int row) {
+        return null;
+    }
 }

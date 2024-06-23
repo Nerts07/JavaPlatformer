@@ -1,10 +1,14 @@
 package com.platformer2d.world;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public abstract class GameMap
 {
 
+
+    public void render(OrthographicCamera camera, SpriteBatch batch) {
+    }
 
     public abstract void render(OrthographicCamera camera);
 
@@ -25,4 +29,6 @@ public abstract class GameMap
     public abstract int getWidth();
     public abstract int getHeight();
     public abstract int getLayers();
+
+    protected abstract TileType getTileTypeByCoordinate(int layer, int col, int row);
 }

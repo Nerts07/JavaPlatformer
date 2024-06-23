@@ -13,6 +13,7 @@ public class CustomGameMap extends GameMap
     String name;
     int[][][] map;
 
+
     private TextureRegion[][] tiles;
 
     public CustomGameMap () {
@@ -65,5 +66,10 @@ public class CustomGameMap extends GameMap
     @Override
     public int getLayers() {
         return 0;
+    }
+
+    @Override
+    protected TileType getTileTypeByCoordinate(int layer, int col, int row) {
+        return null;
     }
 }
