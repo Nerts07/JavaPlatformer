@@ -17,12 +17,14 @@ public interface AudioObserver
             this.audioFilePath = audioFilePath;
         }
 
-        public String getAudio(){
+        public String getAudio()
+        {
             return audioFilePath;
         }
     }
 
-    enum AudioCommand {
+    enum AudioCommand
+    {
         MUSIC_LOAD,
         MUSIC_PLAY_ONCE,
         MUSIC_PLAY_LOOP,
