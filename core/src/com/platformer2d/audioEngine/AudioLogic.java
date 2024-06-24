@@ -57,8 +57,52 @@ public class AudioLogic implements AudioObserver
         {
             case MUSIC_LOAD:
                 ResourceManager.loadMusicAsset(tracks.getAudio());
+            break;
+
+            case MUSIC_PLAY_ONCE:
+                playMusic(false, tracks.getAudio());
+            break;
+
+            case MUSIC_PLAY_LOOP:
+                playMusic(true, tracks.getAudio());
+                break;
+
+            case MUSIC_STOP:
+                Music music = queueMusic.get(tracks.getAudio());
+                if (music != null){
+                    music.stop();
+                }
+
+            case MUSIC_STOP_ALL:
+                for (Music musicstop : queueMusic.values()){
+                    musicstop.stop();
+                }
+                break;
+
+            default:
+                throw new IllegalStateException("Unexpected value: " + command);
         }
     }
+
+    private void playMusic(boolean isLooping, String fullFilePath) {
+        Music music = queueMusic.get(fullFilePath);
+        if (music != null) {
+            music.setLooping(isLooping);
+            music.setVolume(PreferenceManager.getMusicVolume());
+            checkOutMusicIsPlaying(music);
+            setCurrentMusic(music);
+        } else if (ResourceManager.isAssetLoaded(fullFilePath)) {
+            music = ResourceManager.getMusicAsset(fullFilePath);
+            music.setLooping(isLooping);
+            music.setVolume(PreferenceManager.getMusicVolume());
+            checkOutMusicIsPlaying(music);
+            queueMusic.put(fullFilePath, music);
+            setCurrentMusic(music);
+        } else {
+            LOGGER.debug("Music not loaded");
+        }
+    }
+
 
 
 }

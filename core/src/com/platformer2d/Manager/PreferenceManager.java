@@ -29,5 +29,9 @@ public class PreferenceManager
         return getPrefs().getBoolean(PREF_MUSIC_ENABLED, true);
     }
 
+    public static float getMusicVolume() {
+        return getPrefs().getFloat(PREF_MUSIC_VOLUME, 0.5f);
+    }
+
 
 }

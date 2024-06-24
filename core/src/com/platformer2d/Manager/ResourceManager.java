@@ -34,5 +34,24 @@ public class ResourceManager
         } else {
             LOGGER.debug("Music doesn't exist!: {}", musicFilenamePath);
         }
+
     }
+
+    public static boolean isAssetLoaded(String fileName) {
+        return assetManager.isLoaded(fileName);
+    }
+
+    public static Music getMusicAsset(String musicFilenamePath) {
+        Music music = null;
+
+        // once the asset manager is done loading
+        if (assetManager.isLoaded(musicFilenamePath)) {
+            music = assetManager.get(musicFilenamePath, Music.class);
+        } else {
+            LOGGER.debug("Music is not loaded: {}", musicFilenamePath);
+        }
+
+        return music;
+    }
+
 }
