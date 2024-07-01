@@ -4,8 +4,9 @@ public interface AudioObserver
 {
     void SamadRapper(AudioCommand command, audioTracks tracks);
 
-    enum audioTracks{
-        FUKUMEAN("Gunna-fukumean.mp3"),
+    enum audioTracks
+    {
+        FUKUMEAN("/assets/music/Gunna-fukumean.mp3"),
         CONSCIENCE("Gunna-conscience.mp3"),
         BACKINTHEA("Gunna-back-in-the-a.mp3");
 

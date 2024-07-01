@@ -79,7 +79,8 @@ public class TiledGameMap  extends GameMap
     }
 
     @Override
-    protected TileType getTileTypeByCoordinate(int layer, int col, int row) {
+    protected TileType getTileTypeByCoordinate(int layer, int col, int row)
+    {
         return null;
     }
 }

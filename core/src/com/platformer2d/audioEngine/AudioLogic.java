@@ -3,14 +3,11 @@ package com.platformer2d.audioEngine;
 import com.badlogic.gdx.audio.Music;
 import com.platformer2d.Manager.PreferenceManager;
 import com.platformer2d.Manager.ResourceManager;
-import com.sun.org.slf4j.internal.Logger;
-import com.sun.org.slf4j.internal.LoggerFactory;
 
 import java.util.Hashtable;
 
 public class AudioLogic implements AudioObserver
 {
-    private static final Logger LOGGER = LoggerFactory.getLogger(AudioLogic.class);
     private Music currentMusic;
     private Hashtable<String, Music> queueMusic;
     private static AudioLogic instance = null;
@@ -31,7 +28,8 @@ public class AudioLogic implements AudioObserver
 
     private void checkOutMusicIsPlaying(Music music)
     {
-        if (!PreferenceManager.getInstance().isMusicEnabled()) {
+        if (!PreferenceManager.getInstance().isMusicEnabled())
+        {
             music.stop();
         } else {
             music.play();
@@ -57,6 +55,7 @@ public class AudioLogic implements AudioObserver
         {
             case MUSIC_LOAD:
                 ResourceManager.loadMusicAsset(tracks.getAudio());
+                PreferenceManager.getMusicVolume();
             break;
 
             case MUSIC_PLAY_ONCE:
@@ -65,44 +64,53 @@ public class AudioLogic implements AudioObserver
 
             case MUSIC_PLAY_LOOP:
                 playMusic(true, tracks.getAudio());
-                break;
+            break;
 
             case MUSIC_STOP:
                 Music music = queueMusic.get(tracks.getAudio());
                 if (music != null){
                     music.stop();
                 }
+            break;
 
             case MUSIC_STOP_ALL:
                 for (Music musicstop : queueMusic.values()){
                     musicstop.stop();
                 }
-                break;
+            break;
 
             default:
                 throw new IllegalStateException("Unexpected value: " + command);
         }
     }
 
-    private void playMusic(boolean isLooping, String fullFilePath) {
+    private void playMusic(boolean isLooping, String fullFilePath)
+    {
         Music music = queueMusic.get(fullFilePath);
-        if (music != null) {
+        if (music != null)
+        {
             music.setLooping(isLooping);
             music.setVolume(PreferenceManager.getMusicVolume());
             checkOutMusicIsPlaying(music);
             setCurrentMusic(music);
-        } else if (ResourceManager.isAssetLoaded(fullFilePath)) {
+
+        }
+        else if (ResourceManager.isAssetLoaded(fullFilePath))
+        {
             music = ResourceManager.getMusicAsset(fullFilePath);
             music.setLooping(isLooping);
             music.setVolume(PreferenceManager.getMusicVolume());
             checkOutMusicIsPlaying(music);
             queueMusic.put(fullFilePath, music);
             setCurrentMusic(music);
-        } else {
-            LOGGER.debug("Music not loaded");
         }
     }
 
-
-
+    public void dispose()
+    {
+        for (Music music: queueMusic.values())
+        {
+            music.dispose();
+        }
+    }
 }

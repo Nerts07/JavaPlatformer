@@ -21,7 +21,7 @@ public class PreferenceManager
         return instance;
     }
 
-    protected static Preferences getPrefs() {
+    public static Preferences getPrefs() {
         return Gdx.app.getPreferences(PREFS_NAME);
     }
 
@@ -33,5 +33,9 @@ public class PreferenceManager
         return getPrefs().getFloat(PREF_MUSIC_VOLUME, 0.5f);
     }
 
+    public void setMusicVolume(float volume) {
+        getPrefs().putFloat(PREF_MUSIC_VOLUME, volume);
+        getPrefs().flush();
+    }
 
 }
